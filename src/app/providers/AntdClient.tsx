@@ -1,7 +1,7 @@
 // app/providers/AntdClient.tsx
 "use client";
 
-import '@ant-design/v5-patch-for-react-19';
+import "@ant-design/v5-patch-for-react-19";
 import "antd/dist/reset.css";
 import { ConfigProvider, App as AntApp } from "antd";
 import type { ReactNode } from "react";

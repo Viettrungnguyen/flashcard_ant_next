@@ -1,7 +1,11 @@
 // app/flashcards/layout.tsx
 import type { ReactNode } from "react";
 
-export default function FlashcardsLayout({ children }: { children: ReactNode }) {
+export default function FlashcardsLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <div className="flex flex-col gap-4">
       {/* optional sub-header for flashcards section */}

@@ -1,13 +1,14 @@
-// app/components/AppLayout.tsx
 "use client";
 
-import { Layout, Menu, Button } from "antd";
+import { Layout, Menu } from "antd";
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   HomeOutlined,
   BookOutlined,
   BulbOutlined,
+  SettingOutlined,
+  UserOutlined,
+  GlobalOutlined,
+  LockOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,14 +20,24 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const pathname = usePathname() || "/";
 
-  // map route -> key (adjusted for root routes: "/", "/flashcards", "/quotes")
-  const activeKey =
-    pathname === "/" ? "1" :
-    pathname.startsWith("/flashcards") ? "2" :
-    pathname.startsWith("/quotes") ? "3" : "1";
+  // determine selected key based on current pathname
+  let selectedKey = "home";
+  if (pathname === "/") selectedKey = "home";
+  else if (pathname.startsWith("/flashcards")) selectedKey = "flashcards";
+  else if (pathname.startsWith("/quotes")) selectedKey = "quotes";
+  else if (pathname === "/settings") selectedKey = "settings";
+  else if (pathname.startsWith("/settings/profile"))
+    selectedKey = "settings:profile";
+  else if (pathname.startsWith("/settings/language"))
+    selectedKey = "settings:language";
+  else if (pathname.startsWith("/settings/account"))
+    selectedKey = "settings:account";
+
+  // open the Settings submenu when route is under /settings
+  const defaultOpenKeys = pathname.startsWith("/settings") ? ["settings"] : [];
 
   return (
-    <Layout className="min-h-screen bg-gray-50">
+    <Layout className="bg-gray-50">
       <Sider
         collapsible
         collapsed={collapsed}
@@ -34,9 +45,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         breakpoint="lg"
         collapsedWidth={72}
         width={220}
-        className="shadow-sm"
       >
-        <div className="text-white text-center py-4 text-lg font-extrabold tracking-tight">
+        <div className="!text-white text-center py-4 text-lg font-extrabold tracking-tight">
           <div className="select-none px-2">
             <span className="inline-block mr-2 text-2xl">📘</span>
             {!collapsed && <span>EngLearn</span>}
@@ -46,34 +56,63 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <Menu
           theme="dark"
           mode="inline"
-          selectedKeys={[activeKey]}
+          selectedKeys={[selectedKey]}
+          defaultOpenKeys={defaultOpenKeys}
           items={[
-            { key: "1", icon: <HomeOutlined />, label: <Link href="/">Home</Link> },
-            { key: "2", icon: <BookOutlined />, label: <Link href="/flashcards">Flashcards</Link> },
-            { key: "3", icon: <BulbOutlined />, label: <Link href="/quotes">Quotes</Link> },
+            {
+              key: "home",
+              icon: <HomeOutlined />,
+              label: <Link href="/">Home</Link>,
+            },
+            {
+              key: "flashcards",
+              icon: <BookOutlined />,
+              label: <Link href="/flashcards">Flashcards</Link>,
+            },
+            {
+              key: "quotes",
+              icon: <BulbOutlined />,
+              label: <Link href="/quotes">Quotes</Link>,
+            },
+            // Settings with sub-items
+            {
+              key: "settings",
+              icon: <SettingOutlined />,
+              label: "Settings",
+              children: [
+                {
+                  key: "settings:profile",
+                  icon: <UserOutlined />,
+                  label: <Link href="/settings/profile">Profile</Link>,
+                },
+                {
+                  key: "settings:language",
+                  icon: <GlobalOutlined />,
+                  label: (
+                    <Link href="/settings/language">Learning language</Link>
+                  ),
+                },
+                {
+                  key: "settings:account",
+                  icon: <LockOutlined />,
+                  label: <Link href="/settings/account">Account</Link>,
+                },
+              ],
+            },
           ]}
         />
       </Sider>
 
       <Layout>
-        <Header className="bg-white px-4 py-3 flex items-center justify-between shadow-sm">
-          <div className="flex items-center gap-3">
-            <Button
-              type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
-            />
-            <h1 className="m-0 text-lg font-semibold">English Learning App</h1>
-          </div>
-
+        <Header className="bg-white px-4 py-3 flex items-center justify-end shadow-sm">
           <div className="flex items-center gap-4">
             <div className="text-sm text-gray-600">Welcome</div>
           </div>
         </Header>
 
-        <Content className="p-4">
+        <Content className="p-4 overflow-auto">
           <div className="mx-auto">
-            <div className="p-6 h-full bg-white rounded-2xl shadow-sm">
+            <div className="p-6 bg-white rounded-2xl shadow-sm overflow-auto">
               {children}
             </div>
           </div>

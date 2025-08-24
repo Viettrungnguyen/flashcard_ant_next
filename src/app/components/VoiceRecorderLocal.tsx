@@ -3,7 +3,11 @@
 import { Button } from "antd";
 import { useEffect, useRef, useState } from "react";
 
-export default function VoiceRecorderLocal({ onRecorded }: { onRecorded: (url: string | null) => void }) {
+export default function VoiceRecorderLocal({
+  onRecorded,
+}: {
+  onRecorded: (url: string | null) => void;
+}) {
   const [recording, setRecording] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -11,7 +15,10 @@ export default function VoiceRecorderLocal({ onRecorded }: { onRecorded: (url: s
 
   useEffect(() => {
     return () => {
-      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+      if (
+        mediaRecorderRef.current &&
+        mediaRecorderRef.current.state !== "inactive"
+      ) {
         mediaRecorderRef.current.stop();
       }
       if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -35,7 +42,7 @@ export default function VoiceRecorderLocal({ onRecorded }: { onRecorded: (url: s
         setPreviewUrl(url);
         onRecorded(url);
         // stop tracks
-        stream.getTracks().forEach(t => t.stop());
+        stream.getTracks().forEach((t) => t.stop());
       };
 
       mr.start();
@@ -47,7 +54,10 @@ export default function VoiceRecorderLocal({ onRecorded }: { onRecorded: (url: s
   }
 
   function stop() {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+    if (
+      mediaRecorderRef.current &&
+      mediaRecorderRef.current.state !== "inactive"
+    ) {
       mediaRecorderRef.current.stop();
     }
     setRecording(false);
@@ -57,11 +67,22 @@ export default function VoiceRecorderLocal({ onRecorded }: { onRecorded: (url: s
     <div className="flex flex-col gap-2">
       <div className="flex gap-2">
         {!recording ? (
-          <Button type="primary" onClick={start}>Start Recording</Button>
+          <Button type="primary" onClick={start}>
+            Start Recording
+          </Button>
         ) : (
-          <Button danger onClick={stop}>Stop</Button>
+          <Button danger onClick={stop}>
+            Stop
+          </Button>
         )}
-        <Button onClick={() => { setPreviewUrl(null); onRecorded(null); }}>Clear</Button>
+        <Button
+          onClick={() => {
+            setPreviewUrl(null);
+            onRecorded(null);
+          }}
+        >
+          Clear
+        </Button>
       </div>
 
       {previewUrl && (
