@@ -9,6 +9,7 @@ import MultipleChoiceQuestionComponent from "@/app/components/MultipleChoiceQues
 import FillInTheBlankQuestionComponent from "@/app/components/FillInTheBlankQuestion";
 import TextAnswerQuestionComponent from "@/app/components/TextAnswerQuestion";
 import MessageGlobal, { message } from "@/app/components/MessageGlobal";
+import VideoAudioQuestionComponent from "@/app/components/VideoAudioQuestionComponent";
 
 export default function ExamPage() {
   const params = useParams();
@@ -107,6 +108,9 @@ export default function ExamPage() {
               )}
               {question.type === "text-answer" && (
                 <TextAnswerQuestionComponent question={question} />
+              )}
+              {question.type === "video-audio" && (
+                <VideoAudioQuestionComponent question={question} />
               )}
             </div>
           ))}

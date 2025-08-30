@@ -1,0 +1,47 @@
+Ưu tiên cao (Cần làm trước)
+Chế độ học qua flashcard
+
+Flashcard là công cụ học từ vựng hiệu quả và dễ triển khai.
+Tích hợp sẵn trong dự án của bạn, chỉ cần cải thiện giao diện và thêm tính năng.
+Gợi ý bài học cá nhân hóa
+
+Dựa trên kết quả kiểm tra, gợi ý bài học phù hợp giúp người dùng học tập hiệu quả hơn.
+Chế độ học qua video và âm thanh
+
+Video và âm thanh giúp cải thiện kỹ năng nghe và phát âm, rất quan trọng trong việc học ngoại ngữ.
+Chế độ kiểm tra phát âm
+
+Tính năng này giúp người học cải thiện phát âm, tạo sự khác biệt cho ứng dụng.
+Hệ thống điểm và phần thưởng
+
+Tạo động lực học tập cho người dùng thông qua điểm số và phần thưởng.
+Ưu tiên trung bình (Làm sau khi hoàn thành các tính năng chính)
+Chế độ học theo mục tiêu
+
+Người dùng có thể đặt mục tiêu học tập hàng ngày, giúp duy trì thói quen học tập.
+Từ điển tích hợp
+
+Tích hợp từ điển giúp người dùng tra cứu từ ngay trong bài học, tăng tính tiện lợi.
+Lịch sử học tập và tiến trình
+
+Hiển thị tiến trình học tập giúp người dùng theo dõi sự tiến bộ của mình.
+Chế độ học qua trò chơi (Gamification)
+
+Các trò chơi như ghép từ, đoán nghĩa từ giúp học tập thú vị hơn.
+Ưu tiên thấp (Có thể làm sau cùng)
+Chế độ học offline
+
+Tính năng này hữu ích nhưng không cấp thiết, có thể triển khai sau.
+Chế độ tối (Dark Mode)
+
+Tăng trải nghiệm người dùng nhưng không ảnh hưởng trực tiếp đến việc học.
+Chế độ học nhóm
+
+Học nhóm là tính năng nâng cao, phù hợp khi ứng dụng đã có lượng người dùng lớn.
+Tích hợp chatbot học ngôn ngữ
+
+Chatbot giúp thực hành hội thoại nhưng cần nhiều tài nguyên để phát triển.
+Gợi ý triển khai
+Bước 1: Bắt đầu với các tính năng dễ triển khai như flashcard và hệ thống điểm.
+Bước 2: Tập trung vào các tính năng nâng cao trải nghiệm học tập như video, âm thanh, và kiểm tra phát âm.
+Bước 3: Hoàn thiện các tính năng bổ sung như từ điển, lịch sử học tập, và gamification.

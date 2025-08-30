@@ -2,7 +2,8 @@ export type Question =
   | MultipleChoiceQuestion
   | FillInTheBlankQuestion
   | DragAndDropQuestion
-  | TextAnswerQuestion;
+  | TextAnswerQuestion
+  | VideoAudioQuestion;
 
 export interface MultipleChoiceQuestion {
   id: string;
@@ -33,6 +34,18 @@ export interface TextAnswerQuestion {
   type: "text-answer";
   text: string;
   correct: string;
+}
+
+export interface VideoAudioQuestion {
+  id: string;
+  type: "video-audio";
+  media: {
+    type: "video" | "audio";
+    url: string;
+  };
+  text: string;
+  options: string[];
+  correctAnswer: string;
 }
 
 export interface Exam {
@@ -146,6 +159,28 @@ export const QUOTES: Lesson[] = [
             type: "text-answer",
             text: "Who wrote 'To Kill a Mockingbird'?",
             correct: "Harper Lee",
+          },
+          {
+            id: "q5",
+            type: "video-audio",
+            media: {
+              type: "video",
+              url: "https://www.bigbuckbunny.org/",
+            },
+            text: "What is the main idea of the video?",
+            options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+            correctAnswer: "Option 1",
+          },
+          {
+            id: "q6",
+            type: "video-audio",
+            media: {
+              type: "audio",
+              url: "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3",
+            },
+            text: "What is the speaker talking about?",
+            options: ["Topic A", "Topic B", "Topic C", "Topic D"],
+            correctAnswer: "Topic B",
           },
         ],
       },
