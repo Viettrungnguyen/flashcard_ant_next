@@ -9,6 +9,7 @@ import {
   UserOutlined,
   GlobalOutlined,
   LockOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -25,6 +26,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   if (pathname === "/") selectedKey = "home";
   else if (pathname.startsWith("/flashcards")) selectedKey = "flashcards";
   else if (pathname.startsWith("/quotes")) selectedKey = "quotes";
+  else if (pathname.startsWith("/handwriting")) selectedKey = "handwriting";
+  else if (pathname.startsWith("/dictionary")) selectedKey = "dictionary";
   else if (pathname === "/settings") selectedKey = "settings";
   else if (pathname.startsWith("/settings/profile"))
     selectedKey = "settings:profile";
@@ -73,6 +76,16 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               key: "quotes",
               icon: <BulbOutlined />,
               label: <Link href="/quotes">Quotes</Link>,
+            },
+            {
+              key: "handwriting",
+              icon: <EditOutlined />,
+              label: <Link href="/handwriting">Handwriting</Link>,
+            },
+            {
+              key: "dictionary",
+              icon: <BookOutlined />,
+              label: <Link href="/dictionary">Dictionary</Link>,
             },
             // Settings with sub-items
             {

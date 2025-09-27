@@ -25,4 +25,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-
+/* Ensure ProseMirror content preserves whitespace and wraps lines */
+.ProseMirror {
+  white-space: pre-wrap;
+}

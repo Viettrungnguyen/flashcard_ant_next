@@ -11,10 +11,15 @@
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.1.0",
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
+    "@tiptap/extension-image": "^3.6.1",
+    "@tiptap/react": "^3.6.1",
+    "@tiptap/starter-kit": "^3.6.1",
     "antd": "^5.27.1",
     "next": "15.5.0",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "react-signature-canvas": "^1.1.0-alpha.2",
+    "signature_pad": "^5.1.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
