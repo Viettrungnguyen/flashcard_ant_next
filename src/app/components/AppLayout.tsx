@@ -40,7 +40,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const defaultOpenKeys = pathname.startsWith("/settings") ? ["settings"] : [];
 
   return (
-    <Layout className="bg-gray-50">
+    <Layout className="bg-gray-50 !min-h-[100vh]">
       <Sider
         collapsible
         collapsed={collapsed}

@@ -162,7 +162,7 @@ export default function LessonStudyPage() {
                     onClick={() => setIdx(i)}
                     className={[
                       "h-8 px-3 rounded-full border text-sm",
-                      active ? "bg-black text-white border-black" : "bg-white",
+                      active ? "bg-black !text-white border-black" : "bg-white",
                       done ? "ring-2 ring-green-500" : "",
                     ].join(" ")}
                   >
