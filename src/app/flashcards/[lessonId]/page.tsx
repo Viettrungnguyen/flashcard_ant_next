@@ -13,10 +13,40 @@ export default function LessonStudyPage() {
   const router = useRouter();
   const lessonId = params?.lessonId as string | undefined;
 
+  // load lessons from backend; keep static LESSONS as fallback
+  const [lessonsData, setLessonsData] = useState<Lesson[]>(LESSONS);
+
+  // fetch lessons from backend once (client-side)
+  useEffect(() => {
+    let mounted = true;
+    const apiBase =
+      (process.env.NEXT_PUBLIC_API_URL as string) ?? "http://localhost:3000";
+    const url = `${apiBase}/flashcards`;
+    console.log("LessonStudyPage fetching", { lessonId, url });
+
+    (async () => {
+      try {
+        const res = await fetch(url);
+        console.log("fetch status", res.status);
+        const data = await res.json();
+        if (!mounted) return;
+        if (Array.isArray(data)) setLessonsData(data);
+        else console.warn("unexpected /flashcards response", data);
+      } catch (err) {
+        console.error("failed to fetch /flashcards", err);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // find lesson (fallback to first if missing)
   const lesson = useMemo<Lesson | undefined>(
-    () => LESSONS.find((l) => l.id === lessonId),
-    [lessonId]
+    () => lessonsData.find((l) => l.id === lessonId),
+    [lessonId, lessonsData]
   );
 
   // local state

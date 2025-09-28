@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { QUOTES } from "@/app/data/quotes";
 import { App, Button, notification } from "antd";
 import { useEffect, useState } from "react";
@@ -13,11 +13,49 @@ import VideoAudioQuestionComponent from "@/app/components/VideoAudioQuestionComp
 
 export default function ExamPage() {
   const params = useParams();
+  const router = useRouter();
   const lessonId = params?.lessonId as string | undefined;
   const examId = params?.examId as string | undefined;
 
-  const lesson = QUOTES.find((l) => l.id === lessonId);
-  const exam = lesson?.exams.find((e) => e.id === examId);
+  // remote lesson fetched from backend; fallback to local QUOTES
+  const [remoteLesson, setRemoteLesson] = useState<any | null>(null);
+  const [loadingLesson, setLoadingLesson] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    const fetchLesson = async () => {
+      if (!lessonId) return;
+      setLoadingLesson(true);
+      const apiBase =
+        (process.env.NEXT_PUBLIC_API_URL as string) ?? "http://localhost:3000";
+      try {
+        const res = await fetch(
+          `${apiBase}/quotes/${encodeURIComponent(lessonId)}`
+        );
+        if (!mounted) return;
+        if (res.ok) {
+          const data = await res.json();
+          setRemoteLesson(data);
+        } else {
+          // keep null to use local fallback
+          console.warn("Failed to fetch lesson from backend", res.status);
+        }
+      } catch (err) {
+        console.error("Error fetching lesson", err);
+      } finally {
+        if (mounted) setLoadingLesson(false);
+      }
+    };
+    fetchLesson();
+    return () => {
+      mounted = false;
+    };
+  }, [lessonId]);
+
+  const lesson = (remoteLesson || QUOTES.find((l) => l.id === lessonId)) as
+    | any
+    | undefined;
+  const exam = lesson?.exams?.find((e: any) => e.id === examId);
 
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
 
@@ -66,12 +104,16 @@ export default function ExamPage() {
     });
   };
 
+  if (loadingLesson) {
+    return <div className="py-12">Loading lesson...</div>;
+  }
+
   if (!lesson || !exam) {
     return (
       <div className="py-12">
         <h2 className="text-xl font-semibold">Exam not found</h2>
         <div className="mt-4">
-          <Button onClick={() => history.back()}>Back</Button>
+          <Button onClick={() => router.back()}>Back</Button>
         </div>
       </div>
     );
@@ -117,7 +159,7 @@ export default function ExamPage() {
         </div>
 
         <div className="flex items-center justify-between">
-          <Button onClick={() => history.back()}>Back</Button>
+          <Button onClick={() => router.back()}>Back</Button>
           <Button type="primary" onClick={handleSubmit}>
             Submit
           </Button>
